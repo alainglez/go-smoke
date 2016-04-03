@@ -10,7 +10,7 @@ go microservice to smoke test a website.
     - codegangsta/negroni for idiomatic approach to HTTP middleware.
 - Deployed with Docker.
 
-# USAGE
+# Usage
 runs a smoke test of multiple URLs on a website using concurrent go routines to prime and check the status of a host recently deployed to via a CI job, returns PASS or FAIL along with the status code, duration and size of http responses to each of the URLs. Normally called fro every host in a target environment during a rolling deployment by taking a host down behind the load balancer (reverse proxy), deploying a new build and smoke testing it. 
 
 #Happy flow
@@ -21,6 +21,7 @@ First time
 - add site e.g. www.carnival.com
 - add URLs
 - run a smoke test against a site on a host
+
 Going forward 
 - login user
 - run a smoke test against a site on a host
