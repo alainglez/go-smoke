@@ -14,12 +14,16 @@ go microservice to smoke test a website.
 runs a smoke test of multiple URLs on a website using concurrent go routines to prime and check the status of a host recently deployed to via a CI job, returns PASS or FAIL along with the status code, duration and size of http responses to each of the URLs. Normally called fro every host in a target environment during a rolling deployment by taking a host down behind the load balancer (reverse proxy), deploying a new build and smoke testing it. 
 
 Happy flow
+
+First time
 - register user
 - login user
-- add site e.g. carnival.com US
+- add site e.g. www.carnival.com
 - add URLs
-- run a smoke test against a site
-
+- run a smoke test against a site on a host
+Going forward 
+- login user
+- run a smoke test against a site on a host
 
 URI                     HTTP Verb           Functionality
 /users/register         Post                Creates a new user, e.g. chefdeliveryusr
@@ -28,6 +32,7 @@ URI                     HTTP Verb           Functionality
 /sites                  Get                 Gets all sites
 /urls/sites/{id}        Get                 Gets all URLs for a given site ID. The value of the ID comes from the route parameter
 /urls                   Post                Creates a new URL against an existing site
+
 E.g. Prime and check status of .. 
  Core           "http://www.carnival.com"
  BookingEngine  "https://secure.carnival.com/BookingEngine/Booking/Book?durDays=4&embkCode=MIA&isMilitary=N&isOver55=N&isPastGuest=N&itinCode=ZW0&numGuests=2&sailDate=03062017&sailingID=77874&shipCode=VI&showDbl=False&subRegionCode=CW&be_version=22#/number-of-staterooms"
