@@ -25,7 +25,7 @@ Going forward
 - login user
 - run a smoke test against a site on a host
 
-URI                     HTTP Verb           Functionality
+#URI                    HTTP Verb           Functionality
 /users/register         Post                Creates a new user, e.g. chefdeliveryusr
 /users/login            Post                User logs in to the system, which returns a JWT if loggin is successful. 
 /sites                  Post                Creates a new site. E.g. www.carnival.com, www.carnival.co.uk, ww4.uatcarnival.com
