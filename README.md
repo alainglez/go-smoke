@@ -13,7 +13,7 @@ go microservice to smoke test a website.
 # USAGE
 runs a smoke test of multiple URLs on a website using concurrent go routines to prime and check the status of a host recently deployed to via a CI job, returns PASS or FAIL along with the status code, duration and size of http responses to each of the URLs. Normally called fro every host in a target environment during a rolling deployment by taking a host down behind the load balancer (reverse proxy), deploying a new build and smoke testing it. 
 
-Happy flow
+#Happy flow
 
 First time
 - register user
@@ -25,19 +25,22 @@ Going forward
 - login user
 - run a smoke test against a site on a host
 
-URI                     HTTP Verb           Functionality
+#URIs
+URI,                    HTTP Verb,           Functionality
 
-/users/register         Post                Creates a new user, e.g. chefdeliveryusr
+/users/register,         Post,                Creates a new user, e.g. chefdeliveryusr
 
-/users/login            Post                User logs in to the system, which returns a JWT if loggin is successful. 
+/users/login,            Post,                User logs in to the system, which returns a JWT if loggin is successful. 
 
-/sites                  Post                Creates a new site. E.g. www.carnival.com, www.carnival.co.uk, ww4.uatcarnival.com
+/sites,                  Post,                Creates a new site. E.g. www.carnival.com, www.carnival.co.uk, ww4.uatcarnival.com
 
-/sites                  Get                 Gets all sites
+/sites,                  Get,                 Gets all sites
 
-/urls/sites/{id}        Get                 Gets all URLs for a given site ID. The value of the ID comes from the route parameter
+/smoketests             Post                Runs a smoke test. Host IP, site name from JSON data on Http request Body. JWT on Header.
 
-/urls                   Post                Creates a new URL against an existing site
+/urls/sites/{id},        Get,                 Gets all URLs for a given site ID. The value of the ID comes from the route parameter
+
+/urls,                   Post,                Creates a new URL against an existing site
 
 E.g. Prime and check status of .. 
 
@@ -55,6 +58,4 @@ E.g. Prime and check status of ..
  
  OnlineCheckIn  "TO DO"
  
-/smoketests             Post                Runs a smoke test. Host IP, site name from JSON data on Http request Body. JWT on Header.
-
 TO DO: Add URIs for reporting, updating and deleting previouly created users, sites, URLs and smoke tests.
