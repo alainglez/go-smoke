@@ -25,21 +25,34 @@ Going forward
 - login user
 - run a smoke test against a site on a host
 
-#URI                    HTTP Verb           Functionality
+URI                     HTTP Verb           Functionality
+
 /users/register         Post                Creates a new user, e.g. chefdeliveryusr
+
 /users/login            Post                User logs in to the system, which returns a JWT if loggin is successful. 
+
 /sites                  Post                Creates a new site. E.g. www.carnival.com, www.carnival.co.uk, ww4.uatcarnival.com
+
 /sites                  Get                 Gets all sites
+
 /urls/sites/{id}        Get                 Gets all URLs for a given site ID. The value of the ID comes from the route parameter
+
 /urls                   Post                Creates a new URL against an existing site
 
 E.g. Prime and check status of .. 
+
  Core           "http://www.carnival.com"
+ 
  BookingEngine  "https://secure.carnival.com/BookingEngine/Booking/Book?durDays=4&embkCode=MIA&isMilitary=N&isOver55=N&isPastGuest=N&itinCode=ZW0&numGuests=2&sailDate=03062017&sailingID=77874&shipCode=VI&showDbl=False&subRegionCode=CW&be_version=22#/number-of-staterooms"
+ 
  Login          "https://secure.carnival.com/BookedGuest/guestmanagement/mycarnival/logon?returnUrl=http%3A%2F%2Fwww.carnival.com%2F" 
+ 
  BookedGuest    "https://secure.carnival.com/BookedGuest/"
+ 
  ShoreEx        "https://https://secure.carnival.com/shore-excursions"
+ 
  Funshops       "http://www.carnival.com/Funshops/"                
+ 
  OnlineCheckIn  "TO DO"
  
 /smoketests             Post                Runs a smoke test. Host IP, site name from JSON data on Http request Body. JWT on Header.
