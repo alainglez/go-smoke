@@ -40,7 +40,7 @@ URI,                    HTTP Verb,           Functionality
 
 /sites,                  Get,                 Gets all sites
 
-/smoketests             Post                Runs a smoke test. Host IP, site name from JSON data on Http request Body. JWT on Header.
+/smoketests,             Post,                Runs a smoke test. Host IP, site name from JSON data on Http request Body. JWT on Header.
 
 /urls/sites/{id},        Get,                 Gets all URLs for a given site ID. The value of the ID comes from the route parameter
 
