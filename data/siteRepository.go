@@ -17,7 +17,6 @@ func (r *SiteRepository) Create(site *models.Site) error {
 	obj_id := bson.NewObjectId()
 	site.Id = obj_id
 	site.CreatedOn = time.Now()
-	site.Status = "Created"
 	err := r.C.Insert(&site)
 	return err
 }
@@ -28,9 +27,6 @@ func (r *SiteRepository) Update(site *models.Site) error {
 		bson.M{"$set": bson.M{
 			"name":        site.Name,
 			"description": site.Description,
-			"due":         site.Due,
-			"status":      site.Status,
-			"tags":        site.Tags,
 		}})
 	return err
 }
