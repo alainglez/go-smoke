@@ -9,7 +9,7 @@ go microservice to smoke test a website.
     - gorilla/mux: request router and dispatcher.
     - dgrijalva/jwt-go: helper functions for working with JSON Web Tokens (JWT).
     - codegangsta/negroni: idiomatic approach to HTTP middleware.
-- Deployed with Docker.
+- Deployed in Linux with Docker container .
 
 # Usage
 
