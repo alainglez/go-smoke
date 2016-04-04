@@ -15,20 +15,32 @@ type (
 		Password     string        `json:"password,omitempty"`
 		HashPassword []byte        `json:"hashpassword,omitempty"`
 	}
-	Task struct {
+	Site struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
 		CreatedBy   string        `json:"createdby"`
 		Name        string        `json:"name"`
 		Description string        `json:"description"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
-		Due         time.Time     `json:"due,omitempty"`
-		Status      string        `json:"status,omitempty"`
-		Tags        []string      `json:"tags,omitempty"`
 	}
-	TaskNote struct {
+	SiteUrl struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
-		TaskId      bson.ObjectId `json:"taskid"`
-		Description string        `json:"description"`
+		SiteId      bson.ObjectId `json:"siteid"`
+		Url	    string        `json:"url"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
 	}
+	SmokeTest struct {
+		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
+		SiteId      bson.ObjectId `json:"siteid"`
+		CreatedBy   string        `json:"createdby"`
+		Host        string        `json:"host,omitempty"`
+		CreatedOn      time.Time  `json:"createdon,omitempty"`
+		StatusCode     string     `json:"statuscode,omitempty"`
+		UrlStatusCodes []UrlCodes `json:"urlstatuscodes,omitempty"`
+		Tags        []string      `json:"tags,omitempty"`
+	}
+	UrlCodes struct {
+		Url	    string	  `json:"url,omitempty"` 
+		StatusCode  string	  `json:"statuscode,omitempty"`
+	}
+	
 )
