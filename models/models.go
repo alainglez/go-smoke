@@ -24,7 +24,7 @@ type (
 	SiteUrl struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
 		SiteId      bson.ObjectId `json:"siteid"`
-		Url	    string        `json:"url"`
+		Url	    string        `json:"url,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
 	}
 	SmokeTest struct {
