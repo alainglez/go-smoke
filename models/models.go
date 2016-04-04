@@ -33,8 +33,8 @@ type (
 		SiteId      bson.ObjectId `json:"siteid"`
 		CreatedBy   string        `json:"createdby"`
 		Host        string        `json:"host,omitempty"`
-		CreatedOn      time.Time  `json:"createdon,omitempty"`
-		StatusCode     string     `json:"statuscode,omitempty"`
+		CreatedOn   time.Time     `json:"createdon,omitempty"`
+		StatusCode  string        `json:"statuscode,omitempty"`
 		UrlStatusCodes []UrlCodes `json:"urlstatuscodes,omitempty"`
 		Tags        []string      `json:"tags,omitempty"`
 	}
