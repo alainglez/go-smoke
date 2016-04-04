@@ -17,20 +17,15 @@ func (r *SmokeTestRepository) Create(smoketest *models.SmokeTest) error {
 	obj_id := bson.NewObjectId()
 	smoketest.Id = obj_id
 	smoketest.CreatedOn = time.Now()
-	smoketest.Status = "Created"
 	err := r.C.Insert(&smoketest)
 	return err
 }
-
 func (r *SmokeTestRepository) Update(smoketest *models.SmokeTest) error {
 	// partial update on MogoDB
 	err := r.C.Update(bson.M{"_id": smoketest.Id},
 		bson.M{"$set": bson.M{
-			"name":        smoketest.Name,
-			"description": smoketest.Description,
-			"due":         smoketest.Due,
-			"status":      smoketest.Status,
-			"tags":        smoketest.Tags,
+			"passfail":    smoketest.PassFail,
+			"urlresults":  smoketest.UrlResults,
 		}})
 	return err
 }
