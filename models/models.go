@@ -17,8 +17,8 @@ type (
 	}
 	Site struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
-		Name        string        `json:"name"`
-		Description string        `json:"description"`
+		Name        string        `json:"name,omitempty"`
+		Description string        `json:"description,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
 	}
 	SiteUrl struct {
