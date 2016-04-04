@@ -46,14 +46,20 @@ func addIndexes() {
 		Background: true,
 		Sparse:     true,
 	}
-	taskIndex := mgo.Index{
+	siteIndex := mgo.Index{
 		Key:        []string{"createdby"},
 		Unique:     false,
 		Background: true,
 		Sparse:     true,
 	}
-	noteIndex := mgo.Index{
-		Key:        []string{"taskid"},
+	smoketestIndex := mgo.Index{
+		Key:        []string{"createdby"},
+		Unique:     false,
+		Background: true,
+		Sparse:     true,
+	}
+	urlIndex := mgo.Index{
+		Key:        []string{"siteid"},
 		Unique:     false,
 		Background: true,
 		Sparse:     true,
@@ -62,18 +68,23 @@ func addIndexes() {
 	session := GetSession().Copy()
 	defer session.Close()
 	userCol := session.DB(AppConfig.Database).C("users")
-	taskCol := session.DB(AppConfig.Database).C("tasks")
-	noteCol := session.DB(AppConfig.Database).C("notes")
+	siteCol := session.DB(AppConfig.Database).C("sites")
+	smoketestCol := session.DB(AppConfig.Database).C("smoketests")
+	urlCol := session.DB(AppConfig.Database).C("urls")
 
 	err = userCol.EnsureIndex(userIndex)
 	if err != nil {
 		log.Fatalf("[addIndexes]: %s\n", err)
 	}
-	err = taskCol.EnsureIndex(taskIndex)
+	err = siteCol.EnsureIndex(siteIndex)
 	if err != nil {
 		log.Fatalf("[addIndexes]: %s\n", err)
 	}
-	err = noteCol.EnsureIndex(noteIndex)
+	err = smoketestCol.EnsureIndex(smoketestIndex)
+	if err != nil {
+		log.Fatalf("[addIndexes]: %s\n", err)
+	}
+	err = urlCol.EnsureIndex(urlIndex)
 	if err != nil {
 		log.Fatalf("[addIndexes]: %s\n", err)
 	}
