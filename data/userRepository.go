@@ -5,7 +5,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/shijuvar/go-web/taskmanager/models"
+	"github.com/alainglez/go-smoke/models"
 )
 
 type UserRepository struct {
