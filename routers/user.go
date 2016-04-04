@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/shijuvar/go-web/taskmanager/controllers"
+	"github.com/alainglez/go-smoke/controllers"
 )
 
 func SetUserRoutes(router *mux.Router) *mux.Router {
