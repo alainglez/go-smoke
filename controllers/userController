@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/shijuvar/go-web/taskmanager/common"
-	"github.com/shijuvar/go-web/taskmanager/data"
-	"github.com/shijuvar/go-web/taskmanager/models"
+	"github.com/alainglez/go-smoke/common"
+	"github.com/alainglez/go-smoke/data"
+	"github.com/alainglez/go-smoke/models"
 )
 
 // Handler for HTTP Post - "/users/register"
