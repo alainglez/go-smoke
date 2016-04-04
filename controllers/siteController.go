@@ -8,33 +8,33 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/shijuvar/go-web/taskmanager/common"
-	"github.com/shijuvar/go-web/taskmanager/data"
+	"github.com/alainglez/go-smoke/common"
+	"github.com/alainglez/go-smoke/data"
 )
 
-// Handler for HTTP Post - "/tasks"
-// Insert a new Task document
-func CreateTask(w http.ResponseWriter, r *http.Request) {
-	var dataResource TaskResource
-	// Decode the incoming Task json
+// Handler for HTTP Post - "/sites"
+// Insert a new Site document
+func CreateSite(w http.ResponseWriter, r *http.Request) {
+	var dataResource SiteResource
+	// Decode the incoming Site json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
 		common.DisplayAppError(
 			w,
 			err,
-			"Invalid Task data",
+			"Invalid Site data",
 			500,
 		)
 		return
 	}
-	task := &dataResource.Data
+	site := &dataResource.Data
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("tasks")
-	repo := &data.TaskRepository{c}
-	// Insert a task document
-	repo.Create(task)
-	if j, err := json.Marshal(TaskResource{Data: *task}); err != nil {
+	c := context.DbCollection("sites")
+	repo := &data.SiteRepository{c}
+	// Insert a site document
+	repo.Create(site)
+	if j, err := json.Marshal(SiteResource{Data: *site}); err != nil {
 		common.DisplayAppError(
 			w,
 			err,
@@ -49,15 +49,15 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Handler for HTTP Get - "/tasks"
-// Returns all Task documents
-func GetTasks(w http.ResponseWriter, r *http.Request) {
+// Handler for HTTP Get - "/sites"
+// Returns all Site documents
+func GetSites(w http.ResponseWriter, r *http.Request) {
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("tasks")
-	repo := &data.TaskRepository{c}
-	tasks := repo.GetAll()
-	j, err := json.Marshal(TasksResource{Data: tasks})
+	c := context.DbCollection("sites")
+	repo := &data.SiteRepository{c}
+	sites := repo.GetAll()
+	j, err := json.Marshal(SitesResource{Data: sites})
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -72,17 +72,17 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
-// Handler for HTTP Get - "/tasks/{id}"
-// Returns a single Task document by id
-func GetTaskById(w http.ResponseWriter, r *http.Request) {
+// Handler for HTTP Get - "/sites/{id}"
+// Returns a single Site document by id
+func GetSiteById(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	id := vars["id"]
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("tasks")
-	repo := &data.TaskRepository{c}
-	task, err := repo.GetById(id)
+	c := context.DbCollection("sites")
+	repo := &data.SiteRepository{c}
+	site, err := repo.GetById(id)
 	if err != nil {
 		if err == mgo.ErrNotFound {
 			w.WriteHeader(http.StatusNoContent)
@@ -97,7 +97,7 @@ func GetTaskById(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	if j, err := json.Marshal(task); err != nil {
+	if j, err := json.Marshal(site); err != nil {
 		common.DisplayAppError(
 			w,
 			err,
@@ -112,18 +112,18 @@ func GetTaskById(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Handler for HTTP Get - "/tasks/users/{id}"
-// Returns all Tasks created by a User
-func GetTasksByUser(w http.ResponseWriter, r *http.Request) {
+// Handler for HTTP Get - "/sites/users/{id}"
+// Returns all Sites created by a User
+func GetSitesByUser(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	user := vars["id"]
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("tasks")
-	repo := &data.TaskRepository{c}
-	tasks := repo.GetByUser(user)
-	j, err := json.Marshal(TasksResource{Data: tasks})
+	c := context.DbCollection("sites")
+	repo := &data.SiteRepository{c}
+	sites := repo.GetByUser(user)
+	j, err := json.Marshal(SitesResource{Data: sites})
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -138,32 +138,32 @@ func GetTasksByUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
-// Handler for HTTP Put - "/tasks/{id}"
-// Update an existing Task document
-func UpdateTask(w http.ResponseWriter, r *http.Request) {
+// Handler for HTTP Put - "/sites/{id}"
+// Update an existing Site document
+func UpdateSite(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	id := bson.ObjectIdHex(vars["id"])
-	var dataResource TaskResource
-	// Decode the incoming Task json
+	var dataResource SiteResource
+	// Decode the incoming Site json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
 		common.DisplayAppError(
 			w,
 			err,
-			"Invalid Task data",
+			"Invalid Site data",
 			500,
 		)
 		return
 	}
-	task := &dataResource.Data
-	task.Id = id
+	site := &dataResource.Data
+	site.Id = id
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("tasks")
-	repo := &data.TaskRepository{c}
-	// Update an existing Task document
-	if err := repo.Update(task); err != nil {
+	c := context.DbCollection("sites")
+	repo := &data.SiteRepository{c}
+	// Update an existing Site document
+	if err := repo.Update(site); err != nil {
 		common.DisplayAppError(
 			w,
 			err,
@@ -176,16 +176,16 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Handler for HTTP Delete - "/tasks/{id}"
-// Delete an existing Task document
-func DeleteTask(w http.ResponseWriter, r *http.Request) {
+// Handler for HTTP Delete - "/sites/{id}"
+// Delete an existing Site document
+func DeleteSite(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("tasks")
-	repo := &data.TaskRepository{c}
-	// Delete an existing Task document
+	c := context.DbCollection("sites")
+	repo := &data.SiteRepository{c}
+	// Delete an existing Site document
 	err := repo.Delete(id)
 	if err != nil {
 		common.DisplayAppError(
