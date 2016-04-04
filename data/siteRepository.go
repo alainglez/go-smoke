@@ -6,57 +6,57 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/shijuvar/go-web/taskmanager/models"
+	"github.com/alainglez/go-smoke/models"
 )
 
-type TaskRepository struct {
+type SiteRepository struct {
 	C *mgo.Collection
 }
 
-func (r *TaskRepository) Create(task *models.Task) error {
+func (r *SiteRepository) Create(site *models.Site) error {
 	obj_id := bson.NewObjectId()
-	task.Id = obj_id
-	task.CreatedOn = time.Now()
-	task.Status = "Created"
-	err := r.C.Insert(&task)
+	site.Id = obj_id
+	site.CreatedOn = time.Now()
+	site.Status = "Created"
+	err := r.C.Insert(&site)
 	return err
 }
 
-func (r *TaskRepository) Update(task *models.Task) error {
+func (r *SiteRepository) Update(site *models.Site) error {
 	// partial update on MogoDB
-	err := r.C.Update(bson.M{"_id": task.Id},
+	err := r.C.Update(bson.M{"_id": site.Id},
 		bson.M{"$set": bson.M{
-			"name":        task.Name,
-			"description": task.Description,
-			"due":         task.Due,
-			"status":      task.Status,
-			"tags":        task.Tags,
+			"name":        site.Name,
+			"description": site.Description,
+			"due":         site.Due,
+			"status":      site.Status,
+			"tags":        site.Tags,
 		}})
 	return err
 }
-func (r *TaskRepository) Delete(id string) error {
+func (r *SiteRepository) Delete(id string) error {
 	err := r.C.Remove(bson.M{"_id": bson.ObjectIdHex(id)})
 	return err
 }
-func (r *TaskRepository) GetAll() []models.Task {
-	var tasks []models.Task
+func (r *SiteRepository) GetAll() []models.Site {
+	var sites []models.Site
 	iter := r.C.Find(nil).Iter()
-	result := models.Task{}
+	result := models.Site{}
 	for iter.Next(&result) {
-		tasks = append(tasks, result)
+		sites = append(sites, result)
 	}
-	return tasks
+	return sites
 }
-func (r *TaskRepository) GetById(id string) (task models.Task, err error) {
-	err = r.C.FindId(bson.ObjectIdHex(id)).One(&task)
+func (r *SiteRepository) GetById(id string) (site models.Site, err error) {
+	err = r.C.FindId(bson.ObjectIdHex(id)).One(&site)
 	return
 }
-func (r *TaskRepository) GetByUser(user string) []models.Task {
-	var tasks []models.Task
+func (r *SiteRepository) GetByUser(user string) []models.Site {
+	var sites []models.Site
 	iter := r.C.Find(bson.M{"createdby": user}).Iter()
-	result := models.Task{}
+	result := models.Site{}
 	for iter.Next(&result) {
-		tasks = append(tasks, result)
+		sites = append(sites, result)
 	}
-	return tasks
+	return sites
 }
