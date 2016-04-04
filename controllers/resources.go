@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/shijuvar/go-web/taskmanager/models"
+	"github.com/alainglez/go-smoke/models"
 )
 
 //Models for JSON resources
@@ -18,23 +18,32 @@ type (
 	AuthUserResource struct {
 		Data AuthUserModel `json:"data"`
 	}
-	// For Post/Put - /tasks
-	// For Get - /tasks/id
-	TaskResource struct {
-		Data models.Task `json:"data"`
+	// For Post/Put - /sites
+	// For Get - /sites/id
+	SiteResource struct {
+		Data models.Site `json:"data"`
 	}
-	// For Get - /tasks
-	TasksResource struct {
-		Data []models.Task `json:"data"`
+	// For Get - /sites
+	SitesResource struct {
+		Data []models.Site `json:"data"`
 	}
-	// For Post/Put - /notes
-	NoteResource struct {
-		Data NoteModel `json:"data"`
+	// For Post/Put - /smoketests
+	// For Get - /smoketests/id
+	SmokeTestResource struct {
+		Data models.SmokeTest `json:"data"`
 	}
-	// For Get - /notes
-	// For /notes/tasks/id
-	NotesResource struct {
-		Data []models.TaskNote `json:"data"`
+	// For Get - /smoketests
+	SmokeTestsResource struct {
+		Data []models.SmokeTest `json:"data"`
+	}
+	// For Post/Put - /urls
+	UrlResource struct {
+		Data UrlModel `json:"data"`
+	}
+	// For Get - /urls
+	// For /urls/sites/id
+	UrlsResource struct {
+		Data []models.SiteUrl `json:"data"`
 	}
 	//Model for authentication
 	LoginModel struct {
@@ -46,9 +55,9 @@ type (
 		User  models.User `json:"user"`
 		Token string      `json:"token"`
 	}
-	//Model for a TaskNote
-	NoteModel struct {
-		TaskId      string `json:"taskid"`
+	//Model for a SiteUrl
+	UrlModel struct {
+		SiteId      string `json:"siteid"`
 		Description string `json:"description"`
 	}
 )
