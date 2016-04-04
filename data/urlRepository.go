@@ -6,53 +6,53 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/shijuvar/go-web/taskmanager/models"
+	"github.com/alainglez/go-smoke/models"
 )
 
-type NoteRepository struct {
+type UrlRepository struct {
 	C *mgo.Collection
 }
 
-func (r *NoteRepository) Create(note *models.TaskNote) error {
+func (r *UrlRepository) Create(url *models.TaskUrl) error {
 	obj_id := bson.NewObjectId()
-	note.Id = obj_id
-	note.CreatedOn = time.Now()
-	err := r.C.Insert(&note)
+	url.Id = obj_id
+	url.CreatedOn = time.Now()
+	err := r.C.Insert(&url)
 	return err
 }
 
-func (r *NoteRepository) Update(note *models.TaskNote) error {
+func (r *UrlRepository) Update(url *models.TaskUrl) error {
 	// partial update on MogoDB
-	err := r.C.Update(bson.M{"_id": note.Id},
+	err := r.C.Update(bson.M{"_id": url.Id},
 		bson.M{"$set": bson.M{
-			"description": note.Description,
+			"description": url.Description,
 		}})
 	return err
 }
-func (r *NoteRepository) Delete(id string) error {
+func (r *UrlRepository) Delete(id string) error {
 	err := r.C.Remove(bson.M{"_id": bson.ObjectIdHex(id)})
 	return err
 }
-func (r *NoteRepository) GetByTask(id string) []models.TaskNote {
-	var notes []models.TaskNote
+func (r *UrlRepository) GetByTask(id string) []models.TaskUrl {
+	var urls []models.TaskUrl
 	taskid := bson.ObjectIdHex(id)
 	iter := r.C.Find(bson.M{"taskid": taskid}).Iter()
-	result := models.TaskNote{}
+	result := models.TaskUrl{}
 	for iter.Next(&result) {
-		notes = append(notes, result)
+		urls = append(urls, result)
 	}
-	return notes
+	return urls
 }
-func (r *NoteRepository) GetAll() []models.TaskNote {
-	var notes []models.TaskNote
+func (r *UrlRepository) GetAll() []models.TaskUrl {
+	var urls []models.TaskUrl
 	iter := r.C.Find(nil).Iter()
-	result := models.TaskNote{}
+	result := models.TaskUrl{}
 	for iter.Next(&result) {
-		notes = append(notes, result)
+		urls = append(urls, result)
 	}
-	return notes
+	return urls
 }
-func (r *NoteRepository) GetById(id string) (note models.TaskNote, err error) {
-	err = r.C.FindId(bson.ObjectIdHex(id)).One(&note)
+func (r *UrlRepository) GetById(id string) (url models.TaskUrl, err error) {
+	err = r.C.FindId(bson.ObjectIdHex(id)).One(&url)
 	return
 }
