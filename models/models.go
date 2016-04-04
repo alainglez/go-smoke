@@ -25,21 +25,23 @@ type (
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
 		SiteId      bson.ObjectId `json:"siteid"`
 		Url	    string        `json:"url,omitempty"`
+		HtmlFragment string	  `json:"htmlfragment"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
 	}
 	SmokeTest struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
-		SiteId      bson.ObjectId `json:"siteid"`
+		SiteName    strin	  `json:"sitename"`
 		CreatedBy   string        `json:"createdby"`
 		Host        string        `json:"host,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
-		StatusCode  string        `json:"statuscode,omitempty"`
-		UrlStatusCodes []UrlCodes `json:"urlstatuscodes,omitempty"`
+		PassFail    string        `json:"passfail,omitempty"`
+		UrlResults  []UrlCodes    `json:"urlresults,omitempty"`
 		Tags        []string      `json:"tags,omitempty"`
 	}
 	UrlCodes struct {
 		Url	    string	  `json:"url,omitempty"` 
 		StatusCode  string	  `json:"statuscode,omitempty"`
+		PassFail    string	  'json:"passfail,omitempty"`
 	}
 	
 )
