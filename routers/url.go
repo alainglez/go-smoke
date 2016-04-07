@@ -13,7 +13,7 @@ func SetUrlRoutes(router *mux.Router) *mux.Router {
 	urlRouter.HandleFunc("/urls/{id}", controllers.UpdateUrl).Methods("PUT")
 	urlRouter.HandleFunc("/urls/{id}", controllers.GetUrlById).Methods("GET")
 	urlRouter.HandleFunc("/urls", controllers.GetUrls).Methods("GET")
-	urlRouter.HandleFunc("/urls/tasks/{id}", controllers.GetUrlsByTask).Methods("GET")
+	urlRouter.HandleFunc("/urls/sites/{id}", controllers.GetUrlsBySite).Methods("GET")
 	urlRouter.HandleFunc("/urls/{id}", controllers.DeleteUrl).Methods("DELETE")
 	router.PathPrefix("/urls").Handler(negroni.New(
 		negroni.HandlerFunc(common.Authorize),
