@@ -34,6 +34,10 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	repo := &data.SmokeTestRepository{c}
 	// Insert a smoketest document
 	repo.Create(smoketest)
+	// Run the smoke tests by looping and checking each URL of the Site specified in the incoming JSON
+	
+	// Update the smoketest document
+	repo.Update(smoketest)
 	if j, err := json.Marshal(SmokeTestResource{Data: *smoketest}); err != nil {
 		common.DisplayAppError(
 			w,
