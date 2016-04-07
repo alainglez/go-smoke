@@ -14,7 +14,7 @@ import (
 
 // Handler for HTTP Post - "/smoketests"
 // Insert a new SmokeTest document
-func CreateSmokeTest(w http.ResponseWriter, r *http.Request) {
+func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	var dataResource SmokeTestResource
 	// Decode the incoming SmokeTest json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
