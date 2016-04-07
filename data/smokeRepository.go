@@ -21,7 +21,7 @@ func (r *SmokeTestRepository) Create(smoketest *models.SmokeTest) error {
 	return err
 }
 func (r *SmokeTestRepository) Update(smoketest *models.SmokeTest) error {
-	// partial update on MogoDB
+	// partial update on MongoDB
 	err := r.C.Update(bson.M{"_id": smoketest.Id},
 		bson.M{"$set": bson.M{
 			"passfail":    smoketest.PassFail,
