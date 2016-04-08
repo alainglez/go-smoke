@@ -43,6 +43,15 @@ func (r *UrlRepository) GetBySite(id string) []models.SiteUrl {
 	}
 	return urls
 }
+func (r *UrlRepository) GetBySiteName(sitename string) []models.SiteUrl {
+	var urls []models.SiteUrl
+	iter := r.C.Find(bson.M{"sitename": sitename}).Iter()
+	result := models.SiteUrl{}
+	for iter.Next(&result) {
+		urls = append(urls, result)
+	}
+	return urls
+}
 func (r *UrlRepository) GetAll() []models.SiteUrl {
 	var urls []models.SiteUrl
 	iter := r.C.Find(nil).Iter()
