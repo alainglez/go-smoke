@@ -30,7 +30,7 @@ type (
 	}
 	SmokeTest struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
-		SiteName    strin	  `json:"sitename"`
+		SiteName    string	  `json:"sitename"`
 		CreatedBy   string        `json:"createdby"`
 		Host        string        `json:"host,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
