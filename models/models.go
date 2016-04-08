@@ -30,6 +30,7 @@ type (
 	}
 	SmokeTest struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
+		SiteId      bson.ObjectId `json:"siteid,omitempty"`
 		SiteName    string	  `json:"sitename"`
 		CreatedBy   string        `json:"createdby"`
 		Host        string        `json:"host,omitempty"`
