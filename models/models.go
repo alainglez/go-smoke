@@ -23,7 +23,7 @@ type (
 	}
 	SiteUrl struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
-		SiteId      bson.ObjectId `json:"siteid"`
+		SiteId      bson.ObjectId `json:"siteid,omitempty"`
 		Url	    string        `json:"url,omitempty"`
 		HtmlFragment string	  `json:"htmlfragment"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
