@@ -24,8 +24,13 @@ func (r *SmokeTestRepository) Update(smoketest *models.SmokeTest) error {
 	// partial update on MongoDB
 	err := r.C.Update(bson.M{"_id": smoketest.Id},
 		bson.M{"$set": bson.M{
-			"passfail":    smoketest.PassFail,
-			"urlresults":  smoketest.UrlResults,
+			"siteid":    	smoketest.SiteId,
+			"envdns":	smoketest.EnvDNS,
+			"createdby":	smoketest.CreatedBy,
+			"hostip":	smoketest.HostIP,
+			"passfail":    	smoketest.PassFail,
+			"urlresults":  	smoketest.UrlResults,
+			"tags":		smoketest.Tags
 		}})
 	return err
 }
