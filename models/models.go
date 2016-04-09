@@ -17,11 +17,11 @@ type (
 	}
 	Site struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
-		Name        string        `json:"name,omitempty"`
+		SiteDns     string        `json:"sitedns,omitempty"`
 		Description string        `json:"description,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
 	}
-	SiteUrl struct {
+	TestUrl struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
 		SiteId      bson.ObjectId `json:"siteid,omitempty"`
 		Url	    string        `json:"url,omitempty"`
@@ -31,9 +31,9 @@ type (
 	SmokeTest struct {
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
 		SiteId      bson.ObjectId `json:"siteid,omitempty"`
-		SiteName    string	  `json:"sitename,omitempty"`
+		EnvDns      string	  `json:"envdns,omitempty"`
 		CreatedBy   string        `json:"createdby,omitempty"`
-		Host        string        `json:"host,omitempty"`
+		HostIP      string        `json:"hostip,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
 		PassFail    string        `json:"passfail,omitempty"`
 		UrlResults  []UrlCodes    `json:"urlresults,omitempty"`
@@ -42,7 +42,6 @@ type (
 	UrlCodes struct {
 		Url	    string	  `json:"url,omitempty"` 
 		StatusCode  string	  `json:"statuscode,omitempty"`
-		PassFail    string	  'json:"passfail,omitempty"`
 	}
 	
 )
