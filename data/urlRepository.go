@@ -13,7 +13,7 @@ type UrlRepository struct {
 	C *mgo.Collection
 }
 
-func (r *UrlRepository) Create(url *models.SiteUrl) error {
+func (r *UrlRepository) Create(url *models.TestUrl) error {
 	obj_id := bson.NewObjectId()
 	url.Id = obj_id
 	url.CreatedOn = time.Now()
@@ -21,8 +21,8 @@ func (r *UrlRepository) Create(url *models.SiteUrl) error {
 	return err
 }
 
-func (r *UrlRepository) Update(url *models.SiteUrl) error {
-	// partial update on MogoDB
+func (r *UrlRepository) Update(url *models.TestUrl) error {
+	// partial update on MongoDB
 	err := r.C.Update(bson.M{"_id": url.Id},
 		bson.M{"$set": bson.M{
 			"Url": url.Url,
@@ -33,26 +33,26 @@ func (r *UrlRepository) Delete(id string) error {
 	err := r.C.Remove(bson.M{"_id": bson.ObjectIdHex(id)})
 	return err
 }
-func (r *UrlRepository) GetBySite(id string) []models.SiteUrl {
-	var urls []models.SiteUrl
+func (r *UrlRepository) GetBySite(id string) []models.TestUrl {
+	var urls []models.TestUrl
 	siteid := bson.ObjectIdHex(id)
 	iter := r.C.Find(bson.M{"siteid": siteid}).Iter()
-	result := models.SiteUrl{}
+	result := models.TestUrl{}
 	for iter.Next(&result) {
 		urls = append(urls, result)
 	}
 	return urls
 }
-func (r *UrlRepository) GetAll() []models.SiteUrl {
-	var urls []models.SiteUrl
+func (r *UrlRepository) GetAll() []models.TestUrl {
+	var urls []models.TestUrl
 	iter := r.C.Find(nil).Iter()
-	result := models.SiteUrl{}
+	result := models.TestUrl{}
 	for iter.Next(&result) {
 		urls = append(urls, result)
 	}
 	return urls
 }
-func (r *UrlRepository) GetById(id string) (url models.SiteUrl, err error) {
+func (r *UrlRepository) GetById(id string) (url models.TestUrl, err error) {
 	err = r.C.FindId(bson.ObjectIdHex(id)).One(&url)
 	return
 }
