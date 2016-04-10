@@ -33,7 +33,7 @@ type (
 		SiteId      bson.ObjectId `json:"siteid,omitempty"`
 		EnvDns      string	  `json:"envdns,omitempty"`
 		CreatedBy   string        `json:"createdby,omitempty"`
-		HostIP      string        `json:"hostip,omitempty"`
+		HostIp      string        `json:"hostip,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
 		PassFail    string        `json:"passfail,omitempty"`
 		UrlResults  []UrlCodes    `json:"urlresults,omitempty"`
