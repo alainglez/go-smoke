@@ -24,9 +24,10 @@ func CreateUrl(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	urlModel := dataResource.Data
-	url := &models.SiteUrl{
-		SiteId:      bson.ObjectIdHex(urlModel.SiteId),
-		Description: urlModel.Description,
+	url := &models.TestUrl{
+		SiteId:      	bson.ObjectIdHex(urlModel.SiteId),
+		Url: 	     	urlModel.Url,
+		HtmlFragment:	urlModel.HtmlFragment,
 	}
 	context := NewContext()
 	defer context.Close()
@@ -126,9 +127,11 @@ func UpdateUrl(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	urlModel := dataResource.Data
-	url := &models.SiteUrl{
+	url := &models.TestUrl{
 		Id:          id,
-		Description: urlModel.Description,
+		SiteId:      	bson.ObjectIdHex(urlModel.SiteId),
+		Url: 	     	urlModel.Url,
+		HtmlFragment:	urlModel.HtmlFragment,
 	}
 	context := NewContext()
 	defer context.Close()
