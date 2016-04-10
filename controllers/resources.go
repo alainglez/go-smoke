@@ -43,7 +43,7 @@ type (
 	// For Get - /urls
 	// For /urls/sites/id
 	UrlsResource struct {
-		Data []models.SiteUrl `json:"data"`
+		Data []models.TestUrl `json:"data"`
 	}
 	//Model for authentication
 	LoginModel struct {
@@ -55,9 +55,10 @@ type (
 		User  models.User `json:"user"`
 		Token string      `json:"token"`
 	}
-	//Model for a SiteUrl
+	//Model for a TestUrl
 	UrlModel struct {
-		SiteId      string `json:"siteid"`
-		Description string `json:"description"`
+		SiteId      	string `json:"siteid"`
+		Url	    	string `json:"url"`
+		HtmlFragment 	string `json:"htmlfragment"`
 	}
 )
