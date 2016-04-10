@@ -32,12 +32,12 @@ type (
 		Id          bson.ObjectId `bson:"_id,omitempty" json:"id"`
 		SiteId      bson.ObjectId `json:"siteid,omitempty"`
 		EnvDns      string	  `json:"envdns,omitempty"`
-		CreatedBy   string        `json:"createdby,omitempty"`
 		HostIp      string        `json:"hostip,omitempty"`
+		Tags        []string      `json:"tags,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
 		PassFail    string        `json:"passfail,omitempty"`
 		UrlResults  []UrlCodes    `json:"urlresults,omitempty"`
-		Tags        []string      `json:"tags,omitempty"`
+		
 	}
 	UrlCodes struct {
 		Url	    string	  `json:"url,omitempty"` 
