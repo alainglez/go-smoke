@@ -34,10 +34,6 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	repo := &data.SmokeTestRepository{c}
 	// Insert a smoketest document
 	repo.Create(smoketest)
-	// Run the smoke tests by looping and checking each URL of the Site specified in the incoming JSON
-	
-	// Update the smoketest document
-	repo.Update(smoketest)
 	if j, err := json.Marshal(SmokeTestResource{Data: *smoketest}); err != nil {
 		common.DisplayAppError(
 			w,
@@ -48,7 +44,7 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOk)
 		w.Write(j)
 	}
 }
@@ -143,8 +139,10 @@ func GetSmokeTestsByUser(w http.ResponseWriter, r *http.Request) {
 }
 
 // Handler for HTTP Put - "/smoketests/{id}"
+// Runs the SmokeTest
 // Update an existing SmokeTest document
-func UpdateSmokeTest(w http.ResponseWriter, r *http.Request) {
+// and Returns the PassFail and URLStatusCodes as JSON in http response
+func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	id := bson.ObjectIdHex(vars["id"])
