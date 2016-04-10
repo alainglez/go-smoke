@@ -61,4 +61,11 @@ type (
 		Url	    	string `json:"url"`
 		HtmlFragment 	string `json:"htmlfragment"`
 	}
+	//Model for a SmokeTest
+	SmokeTestModel struct {
+		SiteId		string `json:"siteid"`
+		EnvDns		string `json:"envdns"`
+		HostIp		string `json:"hostip"`
+		Tags		string `json:"tags"`
+	}
 )
