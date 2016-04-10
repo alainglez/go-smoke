@@ -25,7 +25,9 @@ func (r *UrlRepository) Update(url *models.TestUrl) error {
 	// partial update on MongoDB
 	err := r.C.Update(bson.M{"_id": url.Id},
 		bson.M{"$set": bson.M{
-			"Url": url.Url,
+			"SiteId":	url.SiteId,
+			"Url": 		url.Url,
+			"HtmlFragment": url.HtmlFragment,
 		}})
 	return err
 }
