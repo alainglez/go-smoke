@@ -12,7 +12,7 @@ func InitRoutes() *mux.Router {
 	router = SetSiteRoutes(router)
 	// Routes for the SmokeTest entity
 	router = SetSmokeTestRoutes(router)
-	// Routes for the SiteUrl entity
+	// Routes for the TestUrl entity
 	router = SetUrlRoutes(router)
 	return router
 }
