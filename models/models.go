@@ -35,6 +35,7 @@ type (
 		HostIp      string        `json:"hostip,omitempty"`
 		Tags        []string      `json:"tags,omitempty"`
 		CreatedOn   time.Time     `json:"createdon,omitempty"`
+		CreatedBy   string	  `json:"createdby"`
 		PassFail    string        `json:"passfail,omitempty"`
 		UrlResults  []UrlCodes    `json:"urlresults,omitempty"`
 		
