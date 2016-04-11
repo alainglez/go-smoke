@@ -11,7 +11,7 @@ func SetSmokeTestRoutes(router *mux.Router) *mux.Router {
 	smoketestRouter := mux.NewRouter()
 	smoketestRouter.HandleFunc("/smoketests", controllers.RunSmokeTest).Methods("POST")
 	//PUT not needed as RunSmokeTest updates the PassFail and URLResults and returns them as JSON
-	//smoketest.HandleFunc("/smoketests/{id}", controllers.UpdateSmoketest).Methods("PUT")
+	smoketest.HandleFunc("/smoketests/{id}", controllers.UpdateSmoketest).Methods("PUT")
 	smoketestRouter.HandleFunc("/smoketests", controllers.GetSmokeTests).Methods("GET")
 	smoketestRouter.HandleFunc("/smoketests/{id}", controllers.GetSmokeTestById).Methods("GET")
 	smoketestRouter.HandleFunc("/smoketests/users/{id}", controllers.GetSmokeTestsByUser).Methods("GET")
