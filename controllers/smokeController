@@ -10,10 +10,12 @@ import (
 
 	"github.com/alainglez/go-smoke/common"
 	"github.com/alainglez/go-smoke/data"
+	"github.com/alainglez/go-smoke/models"
 )
 
 // Handler for HTTP Post - "/smoketests"
 // Insert a new SmokeTest document
+// Runs the smoke test and returns status code results by url and overall pass fail in JSON response
 func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	var dataResource SmokeTestResource
 	// Decode the incoming SmokeTest json
@@ -34,6 +36,25 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	repo := &data.SmokeTestRepository{c}
 	// Insert a smoketest document
 	repo.Create(smoketest)
+	// Get the urls for the siteid
+	contexturls := NewContext()
+	defer contexturls.Close()
+	curls := context.DbCollection("urls")
+	repourls :=&data.UrlRepository{curls}
+	testurls := repourls.GetBySite(smoketest.SiteId)
+	// Run smoke test
+	Smoke(smoketest,testurls)
+	// Update the smoke test record with results
+	if err := repo.Update(smoketest); err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"An unexpected error has occurred",
+			500,
+		)
+		return
+	}
+	// Marshal and return SmokeTest results in JSON response
 	if j, err := json.Marshal(SmokeTestResource{Data: *smoketest}); err != nil {
 		common.DisplayAppError(
 			w,
@@ -139,10 +160,9 @@ func GetSmokeTestsByUser(w http.ResponseWriter, r *http.Request) {
 }
 
 // Handler for HTTP Put - "/smoketests/{id}"
-// Runs the SmokeTest
 // Update an existing SmokeTest document
 // and Returns the PassFail and URLStatusCodes as JSON in http response
-func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
+func UpdateSmokeTest(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	id := bson.ObjectIdHex(vars["id"])
