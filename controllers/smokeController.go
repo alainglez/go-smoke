@@ -15,7 +15,7 @@ import (
 
 // Handler for HTTP Post - "/smoketests"
 // Insert a new SmokeTest document 
-// Runs the smoke test and 
+// Runs the smoke test
 // Update the SmokeTest document
 // Returns status code results by url and overall pass fail in JSON response
 func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
