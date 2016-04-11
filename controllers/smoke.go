@@ -1,4 +1,4 @@
-// Smoke crawls web links starting with the command-line arguments.
+// Smoke crawls web links starting with the smoketest and urls arguments.
 //
 // This version uses bounded parallelism.
 // 
@@ -10,66 +10,57 @@ import (
 	"os"
 	"net/http"
 	"golang.org/x/net/html"
+	"github.com/alainglez/go-smoke/models"
 )
 
 //!+
-func main() {
-	worklist := make(chan []string)  // lists of URLs, may have duplicates
-	unseenLinks := make(chan string) // de-duplicated URLs
-
-	// Add command-line arguments to worklist.
-	go func() { worklist <- os.Args[1:] }()
-
-	// Create 20 crawler goroutines to fetch each unseen link.
-	for i := 0; i < 20; i++ {
+func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) {
+	
+	// Create visit goroutines to fetch each link.
+	for i := 0; i < len(testurls); i++ {
 		go func() {
-			for link := range unseenLinks {
-				foundLinks := crawl(link)
-				go func() { worklist <- foundLinks }()
-			}
+				link := testurls[i].Url
+				htmlfragment := testurls[i].HtmlFragment
+				hostip := smoketest.Hostip
+				statuscode := visit(hostip,link,htmlfragment)
+				smoketest.UrlResults[i].Url = link
+				smoketest.UrlResults[i].StatusCode = statuscode
+				if smoketest.PassFail = "FAIL" {
+					continue
+				}
+				else {
+					if statuscode != http.StatusOK {
+						smoketest.PassFail = "FAIL"
+					}
+					else {
+					smoketest.PassFail = "PASS"
+					}
+				}
 		}()
 	}
 
-	// The main goroutine de-duplicates worklist items
-	// and sends the unseen ones to the crawlers.
-	seen := make(map[string]bool)
-	for list := range worklist {
-		for _, link := range list {
-			if !seen[link] {
-				seen[link] = true
-				unseenLinks <- link
-			}
-		}
-	}
-}
 
-func crawl(url string) []string {
-	fmt.Println(url)
-	list, err := links.Extract(url)
-	if err != nil {
-		log.Print(err)
-	}
-	return list
-}
-
-// Extract makes an HTTP GET request to the specified URL, parses
+// Visit makes an HTTP GET request to the specified URL, parses
 // the response as HTML, and returns the links in the HTML document.
-func Extract(url string) ([]string, error) {
-	resp, err := http.Get(url)
+func visit(hostip string, url string, htmlfragment string) (string, error) {
+	// for now, uri will be url
+	uri = url
+	resp, err := http.Get(hostip + uri)
 	if err != nil {
 		return nil, err
 	}
-	if resp.StatusCode != http.StatusOK {
+	statuscode := resp.StatusCode
+	if statuscode != http.StatusOK {
 		resp.Body.Close()
-		return nil, fmt.Errorf("getting %s: %s", url, resp.Status)
+		return statuscode, fmt.Errorf("getting %s: %s", url, resp.Status)
 	}
 
 	doc, err := html.Parse(resp.Body)
 	resp.Body.Close()
 	if err != nil {
-		return nil, fmt.Errorf("parsing %s as HTML: %v", url, err)
+		return statuscode, fmt.Errorf("parsing %s as HTML: %v", url, err)
 	}
-
+	/* No need to return Links
 	var links []string
 	visitNode := func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "a" {
@@ -86,12 +77,14 @@ func Extract(url string) ([]string, error) {
 		}
 	}
 	forEachNode(doc, visitNode, nil)
-	return links, nil
+	*/
+	return statuscode, nil
 }
 
 //!-Extract
 
-// Copied from gopl.io/ch5/outline2.
+// No need to visit nodes for now
+/*
 func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	if pre != nil {
 		pre(n)
@@ -103,4 +96,5 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 		post(n)
 	}
 }
+*/
 //!-
