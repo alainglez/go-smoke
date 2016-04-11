@@ -14,8 +14,10 @@ import (
 )
 
 // Handler for HTTP Post - "/smoketests"
-// Insert a new SmokeTest document
-// Runs the smoke test and returns status code results by url and overall pass fail in JSON response
+// Insert a new SmokeTest document 
+// Runs the smoke test and 
+// Update the SmokeTest document
+// Returns status code results by url and overall pass fail in JSON response
 func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	var dataResource SmokeTestResource
 	// Decode the incoming SmokeTest json
@@ -40,7 +42,7 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	contexturls := NewContext()
 	defer contexturls.Close()
 	curls := context.DbCollection("urls")
-	repourls :=&data.UrlRepository{curls}
+	repourls := &data.UrlRepository{curls}
 	testurls := repourls.GetBySite(smoketest.SiteId)
 	// Run smoke test
 	Smoke(smoketest,testurls)
