@@ -29,7 +29,7 @@ func TestCreateUser(t *testing.T) {
 	r := mux.NewRouter()
 	r.HandleFunc("/users", createUser).Methods("POST")
 
-	userJson := `{"firstname": "shiju", "lastname": "Varghese", "email": "shiju@xyz.com"}`
+	userJson := `{"firstname": "Alain", "lastname": "Gonzalez", "email": "alain.gonzalez@xyz.com"}`
 
 	req, err := http.NewRequest(
 		"POST",
@@ -50,7 +50,7 @@ func TestUniqueEmail(t *testing.T) {
 	r := mux.NewRouter()
 	r.HandleFunc("/users", createUser).Methods("POST")
 
-	userJson := `{"firstname": "shiju", "lastname": "Varghese", "email": "shiju@xyz.com"}`
+	userJson := `{"firstname": "Alain", "lastname": "Gonzalez", "email": "alain.gonzalez@xyz.com"}`
 
 	req, err := http.NewRequest(
 		"POST",
@@ -91,7 +91,7 @@ func TestCreateUserClient(t *testing.T) {
 	server := httptest.NewServer(r)
 	defer server.Close()
 	usersUrl := fmt.Sprintf("%s/users", server.URL)
-	userJson := `{"firstname": "Rosmi", "lastname": "Shiju", "email": "rose@xyz.com"}`
+	userJson := `{"firstname": "Ileana", "lastname": "Gonzalez", "email": "ileana.gonzalez@xyz.com"}`
 	request, err := http.NewRequest("POST", usersUrl, strings.NewReader(userJson))
 
 	res, err := http.DefaultClient.Do(request)
