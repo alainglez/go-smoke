@@ -52,14 +52,14 @@ func visit(hostIp string, testurl *models.TestUrl) (int, error) {
 	if u.Scheme == "https" {
 		u.Host = hostIp + ":443"
 	}	
-	resp, err := http.Get(u)
+	resp, err := http.Get(u.String())
 	if err != nil {
 		return statuscode, err
 	}
 	statuscode = resp.StatusCode
 	defer resp.Body.Close()
 	if statuscode != http.StatusOK {
-		return statuscode, fmt.Errorf("getting %s: %s", url, resp.Status)
+		return statuscode, fmt.Errorf("getting %s: %s", u.String(), resp.Status)
 	}
 	contents, err := ioutil.ReadAll(resp.Body)
         if err != nil {
@@ -68,6 +68,6 @@ func visit(hostIp string, testurl *models.TestUrl) (int, error) {
 	if strings.Contains(string(contents),testurl.HtmlFragment) {
 		return statuscode, nil
 	}
-	return statuscode, fmt.Errorf("couldn't find %s in %s", testurl.HtmlFragment, url)
+	return statuscode, fmt.Errorf("couldn't find %s in %s", testurl.HtmlFragment, u.String())
 }	
 //!-
