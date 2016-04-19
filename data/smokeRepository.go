@@ -31,7 +31,7 @@ func (r *SmokeTestRepository) Update(smoketest *models.SmokeTest) error {
 			"passfail":    	smoketest.PassFail,
 			"urlresults":  	smoketest.UrlResults,
 			"tags":		smoketest.Tags,
-		})
+		}})
 	return err
 }
 func (r *SmokeTestRepository) Delete(id string) error {
