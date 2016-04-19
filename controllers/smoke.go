@@ -13,12 +13,12 @@ import (
 )
 
 //!+
-func Smoke(smoketest *models.SmokeTest,  testurls *[]models.TestUrl) {
+func Smoke(smoketest *models.SmokeTest,  testurls *[]models.TestUrl) (error) {
 	
 	// Create visit goroutines to fetch each link.
-	for _, testurl := range testurls {
+	for _, testurl := range testurls[] {
 		go func() {
-				statusCode := visit(&testurl)
+				statusCode, err := visit(&testurl)
 				smoketest.UrlResults[i].Url = testurls.Url
 				smoketest.UrlResults[i].StatusCode = statusCode
 				if smoketest.PassFail == "FAIL" {
