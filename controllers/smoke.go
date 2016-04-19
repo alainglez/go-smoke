@@ -45,10 +45,10 @@ func visit(testurl *models.TestUrl) (int, error) {
 	if err != nil {
 		return statuscode, err
 	}
-	if u.Scheme = "http" {
+	if u.Scheme == "http" {
 		u.Host = testurl.HostIp + ":80" 
 	}
-	if u.Scheme = "https" {
+	if u.Scheme == "https" {
 		u.Host = testurl.HostIp + ":443"
 	}	
 	resp, err := http.Get(u)
