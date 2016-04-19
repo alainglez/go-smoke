@@ -10,7 +10,6 @@ import (
 
 	"github.com/alainglez/go-smoke/common"
 	"github.com/alainglez/go-smoke/data"
-	"github.com/alainglez/go-smoke/models"
 )
 
 // Handler for HTTP Post - "/smoketests"
@@ -38,12 +37,12 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	repo := &data.SmokeTestRepository{c}
 	// Insert a smoketest document
 	repo.Create(smoketest)
-	// Get the urls for the siteid
+	// Retrieve the urls for the siteid
 	contexturls := NewContext()
 	defer contexturls.Close()
 	curls := context.DbCollection("urls")
 	repourls := &data.UrlRepository{curls}
-	testurls := repourls.GetBySite(smoketest.SiteId)
+	testurls := repourls.GetBySite(smoketest.SiteId.str)
 	// Run smoke test
 	Smoke(smoketest,testurls)
 	// Update the smoke test record with results
@@ -67,7 +66,7 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOk)
+		w.WriteHeader(http.StatusOK)
 		w.Write(j)
 	}
 }
