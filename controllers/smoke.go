@@ -25,12 +25,10 @@ func Smoke(smoketest *models.SmokeTest,  testurls *[]models.TestUrl) {
 				smoketest.UrlResults[i].StatusCode = statusCode
 				if smoketest.PassFail == "FAIL" {
 					continue
-				}
-				else {
+				} else {
 					if statusCode != http.StatusOK {
 						smoketest.PassFail = "FAIL"
-					}
-					else {
+					} else {
 					smoketest.PassFail = "PASS"
 					}
 				}
