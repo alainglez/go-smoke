@@ -15,7 +15,7 @@ import (
 )
 
 //!+
-func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) string {
+func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) error {
 	// Create visit goroutines to fetch each link.
 	for i := 0; i < len(testurls)-1; i++ {
 		go func() {
@@ -33,7 +33,7 @@ func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) string {
 				}
 		}()
 	}
-	return smoketest.PassFail
+	return err
 }
 
 // visit makes an HTTP GET request to the specified URL, parses
