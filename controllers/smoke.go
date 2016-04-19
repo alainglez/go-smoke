@@ -6,8 +6,6 @@ package controllers
 
 import (
 	"fmt"
-	"log"
-	"os"
 	"net/http"
 	"strings"
 	"golang.org/x/net/html"
@@ -18,10 +16,10 @@ import (
 func Smoke(smoketest *models.SmokeTest,  testurls *[]models.TestUrl) {
 	
 	// Create visit goroutines to fetch each link.
-	for i := 0; i < len(testurls); i++ {
+	for _, testurl := range testurls {
 		go func() {
-				statusCode := visit(&testurls[i])
-				smoketest.UrlResults[i].Url = testurls[i].Url
+				statusCode := visit(&testurl)
+				smoketest.UrlResults[i].Url = testurls.Url
 				smoketest.UrlResults[i].StatusCode = statusCode
 				if smoketest.PassFail == "FAIL" {
 					continue
