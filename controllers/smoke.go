@@ -16,10 +16,10 @@ import (
 func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) (error) {
 	
 	// Create visit goroutines to fetch each link.
-	for i := 0; len(testurls)-1; i++ {
+	for i := 0; i < len(testurls)-1; i++ {
 		go func() {
-				statusCode, err := visit(&testurl[i])
-				smoketest.UrlResults[i].Url = testurl[i].Url
+				statusCode, err := visit(&testurls[i])
+				smoketest.UrlResults[i].Url = testurls[i].Url
 				smoketest.UrlResults[i].StatusCode = statusCode
 				if smoketest.PassFail == "FAIL" {
 					continue
@@ -36,9 +36,9 @@ func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) (error) {
 
 // visit makes an HTTP GET request to the specified URL, parses
 // the response as HTML, and returns the links in the HTML document.
-func visit(testurl *models.TestUrl) (string, error) {
+func visit(testurl *models.TestUrl) (int, error) {
 	//hostip string, decodedurl string, htmlfragment string
-	var statuscode string
+	var statuscode int
 	// replace domain with ip :80 | 443 depending if url has https or not
 	u, err := html.Parse(testurl.Url)
 	if err != nil {
