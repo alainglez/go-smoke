@@ -44,15 +44,7 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	repourls := &data.UrlRepository{curls}
 	testurls := repourls.GetBySite(smoketest.SiteId.String())
 	// Run smoke test
-	if err := Smoke(smoketest,testurls); err != nil {
-		common.DisplayAppError(
-			w,
-			err,
-			"An unexpected error has occurred",
-			500,
-		)
-		return
-	}
+	Smoke(smoketest,testurls)
 	// Update the smoke test record with results
 	if err := repo.Update(smoketest); err != nil {
 		common.DisplayAppError(
