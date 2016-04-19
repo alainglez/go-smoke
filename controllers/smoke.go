@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"io/ioutils"
+	"io/ioutil"
 	
 	"github.com/alainglez/go-smoke/models"
 )
