@@ -9,27 +9,25 @@ import (
 	"log"
 	"os"
 	"net/http"
+	"strings"
 	"golang.org/x/net/html"
 	"github.com/alainglez/go-smoke/models"
 )
 
 //!+
-func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) {
+func Smoke(smoketest *models.SmokeTest,  testurls *[]models.TestUrl) {
 	
 	// Create visit goroutines to fetch each link.
 	for i := 0; i < len(testurls); i++ {
 		go func() {
-				link := testurls[i].Url
-				htmlfragment := testurls[i].HtmlFragment
-				hostip := smoketest.Hostip
-				statuscode := visit(hostip,link,htmlfragment)
-				smoketest.UrlResults[i].Url = link
-				smoketest.UrlResults[i].StatusCode = statuscode
-				if smoketest.PassFail = "FAIL" {
+				statusCode := visit(&testurls[i])
+				smoketest.UrlResults[i].Url = testurls[i].Url
+				smoketest.UrlResults[i].StatusCode = statusCode
+				if smoketest.PassFail == "FAIL" {
 					continue
 				}
 				else {
-					if statuscode != http.StatusOK {
+					if statusCode != http.StatusOK {
 						smoketest.PassFail = "FAIL"
 					}
 					else {
@@ -40,61 +38,34 @@ func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) {
 	}
 
 
-// Visit makes an HTTP GET request to the specified URL, parses
+// visit makes an HTTP GET request to the specified URL, parses
 // the response as HTML, and returns the links in the HTML document.
-func visit(hostip string, url string, htmlfragment string) (string, error) {
-	// for now, uri will be url
-	uri = url
-	resp, err := http.Get(hostip + uri)
+func visit(testurl *models.TestUrl) (string, error) {
+	//hostip string, decodedurl string, htmlfragment string
+	var statuscode string
+	// replace domain with ip :80 | 443 depending if url has https or not
+	u, err := html.Parse(testurl.Url)
 	if err != nil {
-		return nil, err
+		return statuscode, err
 	}
-	statuscode := resp.StatusCode
+	if u.Scheme = "http" {
+		u.Host = testurl.HostIp + ":80" 
+	}
+	if u.Scheme = "https") {
+		u.Host = testurl.HostIp + ":443"
+	}	
+	resp, err := http.Get(u)
+	if err != nil {
+		return statuscode, err
+	}
+	statuscode = resp.StatusCode
+	defer resp.Body.Close()
 	if statuscode != http.StatusOK {
-		resp.Body.Close()
 		return statuscode, fmt.Errorf("getting %s: %s", url, resp.Status)
 	}
-
-	doc, err := html.Parse(resp.Body)
-	resp.Body.Close()
-	if err != nil {
-		return statuscode, fmt.Errorf("parsing %s as HTML: %v", url, err)
+	if strings.Contains(resp.Body, htmlfragment) {
+		return statuscode, nil
 	}
-	/* No need to return Links
-	var links []string
-	visitNode := func(n *html.Node) {
-		if n.Type == html.ElementNode && n.Data == "a" {
-			for _, a := range n.Attr {
-				if a.Key != "href" {
-					continue
-				}
-				link, err := resp.Request.URL.Parse(a.Val)
-				if err != nil {
-					continue // ignore bad URLs
-				}
-				links = append(links, link.String())
-			}
-		}
-	}
-	forEachNode(doc, visitNode, nil)
-	*/
-	return statuscode, nil
-}
-
-//!-Extract
-
-// No need to visit nodes for now
-/*
-func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
-	if pre != nil {
-		pre(n)
-	}
-	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		forEachNode(c, pre, post)
-	}
-	if post != nil {
-		post(n)
-	}
-}
-*/
+	return statuscode, fmt.Errorf("couldn't find %s in %s", htmlfragment, url)
+}	
 //!-
