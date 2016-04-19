@@ -30,8 +30,8 @@ func (r *SmokeTestRepository) Update(smoketest *models.SmokeTest) error {
 			"hostip":	smoketest.HostIP,
 			"passfail":    	smoketest.PassFail,
 			"urlresults":  	smoketest.UrlResults,
-			"tags":		smoketest.Tags
-		}})
+			"tags":		smoketest.Tags,
+		})
 	return err
 }
 func (r *SmokeTestRepository) Delete(id string) error {
