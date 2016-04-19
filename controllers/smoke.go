@@ -7,14 +7,14 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
-	"golang.org/x/net/html"
+	
 	"github.com/alainglez/go-smoke/models"
 )
 
 //!+
-func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) (error) {
-	
+func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) string {
 	// Create visit goroutines to fetch each link.
 	for i := 0; i < len(testurls)-1; i++ {
 		go func() {
@@ -32,6 +32,7 @@ func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) (error) {
 				}
 		}()
 	}
+	return smoketest.PassFail
 }
 
 // visit makes an HTTP GET request to the specified URL, parses
@@ -40,7 +41,7 @@ func visit(testurl *models.TestUrl) (int, error) {
 	//hostip string, decodedurl string, htmlfragment string
 	var statuscode int
 	// replace domain with ip :80 | 443 depending if url has https or not
-	u, err := html.Parse(testurl.Url)
+	u, err := url.Parse(testurl.Url)
 	if err != nil {
 		return statuscode, err
 	}
