@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"io/ioutils"
 	
 	"github.com/alainglez/go-smoke/models"
 )
@@ -51,16 +52,20 @@ func visit(hostIp string, testurl *models.TestUrl) (int, error) {
 	if u.Scheme == "https" {
 		u.Host = hostIp + ":443"
 	}	
-	resp, err := http.Get(u.String())
+	resp, err := http.Get(u)
 	if err != nil {
 		return statuscode, err
 	}
 	statuscode = resp.StatusCode
 	defer resp.Body.Close()
 	if statuscode != http.StatusOK {
-		return statuscode, fmt.Errorf("getting %s: %s", testurl.Url, resp.Status)
+		return statuscode, fmt.Errorf("getting %s: %s", url, resp.Status)
 	}
-	if strings.Contains(resp.Body.String(), testurl.HtmlFragment) {
+	contents, err := ioutil.ReadAll(resp.Body)
+        if err != nil {
+            return statuscode, fmt.Errorf("%s", err)
+        }
+	if strings.Contains(string(contents),testurl.HtmlFragment) {
 		return statuscode, nil
 	}
 	return statuscode, fmt.Errorf("couldn't find %s in %s", testurl.HtmlFragment, url)
