@@ -42,7 +42,7 @@ func RunSmokeTest(w http.ResponseWriter, r *http.Request) {
 	defer contexturls.Close()
 	curls := context.DbCollection("urls")
 	repourls := &data.UrlRepository{curls}
-	testurls := repourls.GetBySite(bson.String(smoketest.SiteId))
+	testurls := repourls.GetBySite(smoketest.SiteId.String())
 	// Run smoke test
 	Smoke(smoketest,testurls)
 	// Update the smoke test record with results
