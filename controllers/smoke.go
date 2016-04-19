@@ -51,16 +51,16 @@ func visit(hostIp string, testurl *models.TestUrl) (int, error) {
 	if u.Scheme == "https" {
 		u.Host = hostIp + ":443"
 	}	
-	resp, err := http.Get(u)
+	resp, err := http.Get(u.String())
 	if err != nil {
 		return statuscode, err
 	}
 	statuscode = resp.StatusCode
 	defer resp.Body.Close()
 	if statuscode != http.StatusOK {
-		return statuscode, fmt.Errorf("getting %s: %s", url, resp.Status)
+		return statuscode, fmt.Errorf("getting %s: %s", testurl.Url, resp.Status)
 	}
-	if strings.Contains(resp.Body, testurl.HtmlFragment) {
+	if strings.Contains(resp.Body.String(), testurl.HtmlFragment) {
 		return statuscode, nil
 	}
 	return statuscode, fmt.Errorf("couldn't find %s in %s", testurl.HtmlFragment, url)
