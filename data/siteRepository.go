@@ -25,7 +25,7 @@ func (r *SiteRepository) Update(site *models.Site) error {
 	// partial update on MogoDB
 	err := r.C.Update(bson.M{"_id": site.Id},
 		bson.M{"$set": bson.M{
-			"sitedns":     site.SiteDNS,
+			"sitedns":     site.SiteDns,
 			"description": site.Description,
 		}})
 	return err
