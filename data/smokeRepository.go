@@ -25,9 +25,9 @@ func (r *SmokeTestRepository) Update(smoketest *models.SmokeTest) error {
 	err := r.C.Update(bson.M{"_id": smoketest.Id},
 		bson.M{"$set": bson.M{
 			"siteid":    	smoketest.SiteId,
-			"envdns":	smoketest.EnvDNS,
+			"envdns":	smoketest.EnvDns,
 			"createdby":	smoketest.CreatedBy,
-			"hostip":	smoketest.HostIP,
+			"hostip":	smoketest.HostIp,
 			"passfail":    	smoketest.PassFail,
 			"urlresults":  	smoketest.UrlResults,
 			"tags":		smoketest.Tags,
