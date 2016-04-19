@@ -22,7 +22,7 @@ func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) {
 				smoketest.UrlResults[i].Url = testurls[i].Url
 				statusCode, err := visit(smoketest.HostIp, &testurls[i])
 				smoketest.UrlResults[i].StatusCode = statusCode
-				smoketest.ErrorMsg = err.Error()
+				smoketest.UrlResults[i].Err = err.Error()
 				if smoketest.PassFail == "FAIL" {
 					continue
 				} else {
