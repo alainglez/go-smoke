@@ -16,7 +16,7 @@ import (
 func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) (error) {
 	
 	// Create visit goroutines to fetch each link.
-	for i := 0, len(testurls)-1, i++ {
+	for i := 0; len(testurls)-1; i++ {
 		go func() {
 				statusCode, err := visit(&testurl[i])
 				smoketest.UrlResults[i].Url = testurl[i].Url
