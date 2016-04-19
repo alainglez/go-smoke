@@ -15,12 +15,12 @@ import (
 )
 
 //!+
-func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) {
+func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) error {
 	// Create visit goroutines to fetch each link.
 	for i := 0; i < len(testurls)-1; i++ {
 		go func() {
 				smoketest.UrlResults[i].Url = testurls[i].Url
-				statusCode := visit(smoketest.HostIp, &testurls[i])
+				statusCode, err := visit(smoketest.HostIp, &testurls[i])
 				smoketest.UrlResults[i].StatusCode = statusCode
 				if smoketest.PassFail == "FAIL" {
 					continue
@@ -31,8 +31,10 @@ func Smoke(smoketest *models.SmokeTest,  testurls []models.TestUrl) {
 					smoketest.PassFail = "PASS"
 					}
 				}
+				return err
 		}()
 	}
+	return err
 }
 
 // visit makes an HTTP GET request to the specified URL, parses
