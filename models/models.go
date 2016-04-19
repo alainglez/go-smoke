@@ -42,7 +42,7 @@ type (
 	}
 	UrlCodes struct {
 		Url	    string	  `json:"url,omitempty"` 
-		StatusCode  string	  `json:"statuscode,omitempty"`
+		StatusCode  int		  `json:"statuscode,omitempty"`
 	}
 	
 )
