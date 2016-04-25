@@ -94,7 +94,7 @@ func TestLoginClient(t *testing.T) {
 	defer server.Close()
 	usersUrl := fmt.Sprintf("%s/users/login", server.URL)
 	userJson := `{"email": "ileana.gonzalez@xyz.com", "password": "notapassword"}`
-	request, err := http.NewRequest("POST", usersUrl, userJson)
+	request, err := http.NewRequest("POST", usersUrl, strings.NewReader(userJson))
 
 	res, err := http.DefaultClient.Do(request)
 
