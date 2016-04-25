@@ -87,14 +87,14 @@ func TestRegisterClient(t *testing.T) {
 		t.Errorf("HTTP Status expected: 201, got: %d", res.StatusCode)
 	}
 }
-/*
 func TestLoginClient(t *testing.T) {
 	r := mux.NewRouter()
-	r.HandleFunc("/users", Login).Methods("GET")
+	r.HandleFunc("/users/login", Login).Methods("POST")
 	server := httptest.NewServer(r)
 	defer server.Close()
-	usersUrl := fmt.Sprintf("%s/users", server.URL)
-	request, err := http.NewRequest("GET", usersUrl, nil)
+	usersUrl := fmt.Sprintf("%s/users/login", server.URL)
+	userJson := `{"email": "ileana.gonzalez@xyz.com", "password": "notapassword"}`
+	request, err := http.NewRequest("POST", usersUrl, userJson)
 
 	res, err := http.DefaultClient.Do(request)
 
@@ -106,5 +106,5 @@ func TestLoginClient(t *testing.T) {
 		t.Errorf("HTTP Status expected: 200, got: %d", res.StatusCode)
 	}
 }
-*/
+
 
