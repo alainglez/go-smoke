@@ -69,6 +69,7 @@ func TestUniqueEmail(t *testing.T) {
 }
 */
 func TestRegisterClient(t *testing.T) {
+	t.Parallel()
 	r := mux.NewRouter()
 	r.HandleFunc("/users/register", Register).Methods("POST")
 	server := httptest.NewServer(r)
@@ -88,6 +89,7 @@ func TestRegisterClient(t *testing.T) {
 	}
 }
 func TestLoginClient(t *testing.T) {
+	t.Parallel()
 	r := mux.NewRouter()
 	r.HandleFunc("/users/login", Login).Methods("POST")
 	server := httptest.NewServer(r)
