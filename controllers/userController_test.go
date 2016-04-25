@@ -9,7 +9,7 @@ import (
 
 	"github.com/gorilla/mux"
 )
-
+/*
 func TestGetUsers(t *testing.T) {
 	r := mux.NewRouter()
 	r.HandleFunc("/users", getUsers).Methods("GET")
@@ -67,6 +67,7 @@ func TestUniqueEmail(t *testing.T) {
 		t.Error("Bad Request expected, got: %d", w.Code)
 	}
 }
+*/
 func TestGetUsersClient(t *testing.T) {
 	r := mux.NewRouter()
 	r.HandleFunc("/users", getUsers).Methods("GET")
