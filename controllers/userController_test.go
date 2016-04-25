@@ -68,9 +68,29 @@ func TestUniqueEmail(t *testing.T) {
 	}
 }
 */
-func TestGetUsersClient(t *testing.T) {
+func TestRegisterClient(t *testing.T) {
 	r := mux.NewRouter()
-	r.HandleFunc("/users", getUsers).Methods("GET")
+	r.HandleFunc("/users/register", Register).Methods("POST")
+	server := httptest.NewServer(r)
+	defer server.Close()
+	usersUrl := fmt.Sprintf("%s/users/register", server.URL)
+	userJson := `{"firstname": "Ileana", "lastname": "Gonzalez", "email": "ileana.gonzalez@xyz.com"}`
+	request, err := http.NewRequest("POST", usersUrl, strings.NewReader(userJson))
+
+	res, err := http.DefaultClient.Do(request)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if res.StatusCode != 201 {
+		t.Errorf("HTTP Status expected: 201, got: %d", res.StatusCode)
+	}
+}
+/*
+func TestLoginClient(t *testing.T) {
+	r := mux.NewRouter()
+	r.HandleFunc("/users", Login).Methods("GET")
 	server := httptest.NewServer(r)
 	defer server.Close()
 	usersUrl := fmt.Sprintf("%s/users", server.URL)
@@ -86,22 +106,5 @@ func TestGetUsersClient(t *testing.T) {
 		t.Errorf("HTTP Status expected: 200, got: %d", res.StatusCode)
 	}
 }
-func TestCreateUserClient(t *testing.T) {
-	r := mux.NewRouter()
-	r.HandleFunc("/users", createUser).Methods("POST")
-	server := httptest.NewServer(r)
-	defer server.Close()
-	usersUrl := fmt.Sprintf("%s/users", server.URL)
-	userJson := `{"firstname": "Ileana", "lastname": "Gonzalez", "email": "ileana.gonzalez@xyz.com"}`
-	request, err := http.NewRequest("POST", usersUrl, strings.NewReader(userJson))
+*/
 
-	res, err := http.DefaultClient.Do(request)
-
-	if err != nil {
-		t.Error(err)
-	}
-
-	if res.StatusCode != 201 {
-		t.Errorf("HTTP Status expected: 201, got: %d", res.StatusCode)
-	}
-}
