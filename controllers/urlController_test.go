@@ -13,7 +13,7 @@ import (
 func TestCreateUrl(t *testing.T) {
 	r := mux.NewRouter()
 	r.HandleFunc("/urls", CreateUrl).Methods("POST")
-	urlJson := `{"urldns": "www.carnival.com", "description": "Search & book carnival cruises."}`
+	urlJson := `{"siteid": "345JJ15L342", "url": "https://secure.carnival.com/shore-excursions", "htmlfragment": "Excursion"}`
 	req, err := http.NewRequest(
 		"POST",
 		"/urls",
