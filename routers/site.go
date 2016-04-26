@@ -9,12 +9,12 @@ import (
 
 func SetSiteRoutes(router *mux.Router) *mux.Router {
 	siteRouter := mux.NewRouter()
-	siteRouter.HandleFunc("/sites", controllers.createSite).Methods("POST")
-	siteRouter.HandleFunc("/sites/{id}", controllers.updateSite).Methods("PUT")
-	siteRouter.HandleFunc("/sites", controllers.getSites).Methods("GET")
-	siteRouter.HandleFunc("/sites/{id}", controllers.getSiteById).Methods("GET")
-	siteRouter.HandleFunc("/sites/users/{id}", controllers.getSitesByUser).Methods("GET")
-	siteRouter.HandleFunc("/sites/{id}", controllers.deleteSite).Methods("DELETE")
+	siteRouter.HandleFunc("/sites", controllers.CreateSite).Methods("POST")
+	siteRouter.HandleFunc("/sites/{id}", controllers.UpdateSite).Methods("PUT")
+	siteRouter.HandleFunc("/sites", controllers.GetSites).Methods("GET")
+	siteRouter.HandleFunc("/sites/{id}", controllers.GetSiteById).Methods("GET")
+	siteRouter.HandleFunc("/sites/users/{id}", controllers.GetSitesByUser).Methods("GET")
+	siteRouter.HandleFunc("/sites/{id}", controllers.DeleteSite).Methods("DELETE")
 	router.PathPrefix("/sites").Handler(negroni.New(
 		negroni.HandlerFunc(common.Authorize),
 		negroni.Wrap(siteRouter),
