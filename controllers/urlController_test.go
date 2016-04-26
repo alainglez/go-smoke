@@ -63,7 +63,7 @@ func TestGetUrlByIdClient(t *testing.T) {
 func TestGetUrlBySiteClient(t *testing.T) {
 	t.Parallel()
 	r := mux.NewRouter()
-	r.HandleFunc("/urls/sites/{id}", GetUrlBySite).Methods("GET")
+	r.HandleFunc("/urls/sites/{id}", GetUrlsBySite).Methods("GET")
 	server := httptest.NewServer(r)
 	defer server.Close()
 	urlsUrl := fmt.Sprintf("%s/urls/sites/{id}", server.URL)
