@@ -14,7 +14,7 @@ import (
 
 // Handler for HTTP Post - "/sites"
 // Insert a new Site document
-func CreateSite(w http.ResponseWriter, r *http.Request) {
+func createSite(w http.ResponseWriter, r *http.Request) {
 	var dataResource SiteResource
 	// Decode the incoming Site json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
@@ -51,7 +51,7 @@ func CreateSite(w http.ResponseWriter, r *http.Request) {
 
 // Handler for HTTP Get - "/sites"
 // Returns all Site documents
-func GetSites(w http.ResponseWriter, r *http.Request) {
+func getSites(w http.ResponseWriter, r *http.Request) {
 	context := NewContext()
 	defer context.Close()
 	c := context.DbCollection("sites")
@@ -74,7 +74,7 @@ func GetSites(w http.ResponseWriter, r *http.Request) {
 
 // Handler for HTTP Get - "/sites/{id}"
 // Returns a single Site document by id
-func GetSiteById(w http.ResponseWriter, r *http.Request) {
+func getSiteById(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -114,7 +114,7 @@ func GetSiteById(w http.ResponseWriter, r *http.Request) {
 
 // Handler for HTTP Get - "/sites/users/{id}"
 // Returns all Sites created by a User
-func GetSitesByUser(w http.ResponseWriter, r *http.Request) {
+func getSitesByUser(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	user := vars["id"]
@@ -140,7 +140,7 @@ func GetSitesByUser(w http.ResponseWriter, r *http.Request) {
 
 // Handler for HTTP Put - "/sites/{id}"
 // Update an existing Site document
-func UpdateSite(w http.ResponseWriter, r *http.Request) {
+func updateSite(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	id := bson.ObjectIdHex(vars["id"])
@@ -178,7 +178,7 @@ func UpdateSite(w http.ResponseWriter, r *http.Request) {
 
 // Handler for HTTP Delete - "/sites/{id}"
 // Delete an existing Site document
-func DeleteSite(w http.ResponseWriter, r *http.Request) {
+func deleteSite(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	context := NewContext()
