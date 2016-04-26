@@ -63,11 +63,11 @@ func TestGetSiteByIdClient(t *testing.T) {
 func TestGetSiteByUserClient(t *testing.T) {
 	t.Parallel()
 	r := mux.NewRouter()
-	r.HandleFunc("/sites/users/{id}", GetSiteByUser).Methods("POST")
+	r.HandleFunc("/sites/users/{id}", GetSiteByUser).Methods("GET")
 	server := httptest.NewServer(r)
 	defer server.Close()
 	sitesUrl := fmt.Sprintf("%s/sites/users/{id}", server.URL)
-	request, err := http.NewRequest("POST", sitesUrl, nil)
+	request, err := http.NewRequest("GETT", sitesUrl, nil)
 
 	res, err := http.DefaultClient.Do(request)
 
