@@ -8,6 +8,8 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
+	"github.com/alainglez/go-smoke/test/dockertest"
+	"gopkg.in/mgo.v2"
 )
 
 func TestCreateSite(t *testing.T) {
