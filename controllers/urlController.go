@@ -25,9 +25,9 @@ func CreateUrl(w http.ResponseWriter, r *http.Request) {
 	}
 	urlModel := dataResource.Data
 	url := &models.TestUrl{
-		SiteId:      	bson.ObjectIdHex(urlModel.SiteId),
-		Url: 	     	urlModel.Url,
-		HtmlFragment:	urlModel.HtmlFragment,
+		SiteId:       bson.ObjectIdHex(urlModel.SiteId),
+		Url:          urlModel.Url,
+		HtmlFragment: urlModel.HtmlFragment,
 	}
 	context := NewContext()
 	defer context.Close()
@@ -36,7 +36,7 @@ func CreateUrl(w http.ResponseWriter, r *http.Request) {
 	repo := &data.UrlRepository{c}
 	repo.Create(url)
 	if j, err := json.Marshal(url); err != nil {
-		common.DisplayAppError(w, err, "An unexpected error has occurred", 500)
+		common.DisplayAppError(w, err, "An unexpectedd error has occurred", 500)
 		return
 	} else {
 		w.Header().Set("Content-Type", "application/json")
@@ -128,10 +128,10 @@ func UpdateUrl(w http.ResponseWriter, r *http.Request) {
 	}
 	urlModel := dataResource.Data
 	url := &models.TestUrl{
-		Id:          id,
-		SiteId:      	bson.ObjectIdHex(urlModel.SiteId),
-		Url: 	     	urlModel.Url,
-		HtmlFragment:	urlModel.HtmlFragment,
+		Id:           id,
+		SiteId:       bson.ObjectIdHex(urlModel.SiteId),
+		Url:          urlModel.Url,
+		HtmlFragment: urlModel.HtmlFragment,
 	}
 	context := NewContext()
 	defer context.Close()
