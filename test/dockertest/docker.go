@@ -30,6 +30,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"camlistore.org/pkg/netutil"
 )
 
 /// runLongTest checks all the conditions for running a docker container
@@ -182,17 +184,17 @@ func setupContainer(t *testing.T, image string, port int, timeout time.Duration,
 
 // AwaitReachable tries to make a TCP connection to addr regularly.
 // It returns an error if it's unable to make a connection before maxWait.
-	func AwaitReachable(addr string, maxWait time.Duration) error {
-		done := time.Now().Add(maxWait)
-		for time.Now().Before(done) {
-			c, err := net.Dial("tcp", addr)
-			if err == nil {
-				c.Close()
-				return nil
-			}
-			time.Sleep(100 * time.Millisecond)
+func AwaitReachable(addr string, maxWait time.Duration) error {
+	done := time.Now().Add(maxWait)
+	for time.Now().Before(done) {
+		c, err := net.Dial("tcp", addr)
+		if err == nil {
+			c.Close()
+			return nil
 		}
-		return fmt.Errorf("%v unreachable for %v", addr, maxWait)
+		time.Sleep(100 * time.Millisecond)
+	}
+	return fmt.Errorf("%v unreachable for %v", addr, maxWait)
 }
 
 const (
