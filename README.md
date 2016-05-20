@@ -15,9 +15,6 @@ go microservice to smoke test a website.
 
 Runs a smoke test of multiple URLs on a website using concurrent go routines to prime and check the status of a host recently deployed to via a CI job, returns PASS or FAIL along with the status code, duration and size of http responses to each of the URLs. Normally called from every host in a target environment during a rolling deployment by taking a host down behind the load balancer (reverse proxy), deploying a new build and smoke testing it.
 
-# atom packages
-go-plus, emmet, terminal-plus, minimap, atom-bootstrap4
-
 ###Happy flow
 
 #####First time
@@ -66,3 +63,6 @@ E.g. Prime and check status of ..
  OnlineCheckIn  "TO DO"
 
 TO DO: Add URIs for reporting, updating and deleting previously created users, sites, URLs and smoke tests.
+
+# atom packages
+go-plus, emmet, terminal-plus, minimap, atom-bootstrap4
