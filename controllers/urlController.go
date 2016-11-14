@@ -13,7 +13,7 @@ import (
 	"github.com/alainglez/go-smoke/models"
 )
 
-// Handler for HTTP Post - "/urls"
+// CreateUrl Handler for HTTP Post - "/urls"
 // Insert a new Url document for a SiteId
 func CreateUrl(w http.ResponseWriter, r *http.Request) {
 	var dataResource UrlResource
